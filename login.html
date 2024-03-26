@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="js/jquery-3.7.1.min.js"></script>
+
+</head>
+
+<body>
+    <form action="loginprocess.php" method="post">
+        <p>act<input type="text" name="act" id=""></p>
+        <p>pwd<input type="text" name="pwd" id=""></p>
+        <p>驗證碼<input type="text" name="cans"></p>
+        <div class="imgs"></div>
+
+        <button type="submit">送出</button>
+        <button type="reset">重製</button>
+        <button type="button" onclick="render()">重設驗證碼</button>
+        <p><input type="hidden" name="ans" id="ans"></p>
+    </form>
+    <script>
+        const nums = Array(9).fill(0).map((_, i) => i)
+        for (let i = 0; i < 26; i++) {
+            nums.push(String.fromCharCode(i + 65))
+            nums.push(String.fromCharCode(i + 97))
+        }
+        console.log(nums);
+
+        function render() {
+            $('.imgs').empty();
+            record = ''
+            for (let i = 0; i < 4; i++) {
+                const img = document.createElement('img')
+                const num = Math.floor(Math.random() * nums.length);
+                img.src = 'captcha.php?num=' + nums[num]
+                record += nums[num]
+                $(".imgs").append(img);
+            }
+            $('#ans').val(record);
+        }
+        render()
+    </script>
+
+</body>
+
+</html>
